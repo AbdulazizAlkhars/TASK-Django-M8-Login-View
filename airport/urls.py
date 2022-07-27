@@ -44,5 +44,6 @@ urlpatterns = [
     # REST API
     path("register/", views.UserRegistration.as_view()),
     path("login/", TokenObtainPairView.as_view()),
-    path("login/refresh", TokenRefreshView.as_view()),
+    path("login/refresh/", TokenRefreshView.as_view()),
+    path("book-flight/<int:flight_id>/", views.CreateBooking.as_view()),
 ]

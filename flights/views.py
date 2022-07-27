@@ -1,8 +1,7 @@
 import datetime
 from rest_framework import generics
-from rest_framework.generics import CreateAPIView
 from flights import serializers
-from flights.models import Booking, Flight 
+from flights.models import Booking, Flight
 
 
 class FlightsList(generics.ListAPIView):
@@ -35,8 +34,29 @@ class CancelBooking(generics.DestroyAPIView):
 
 
 class UserRegistration(generics.CreateAPIView):
-
     serializer_class = serializers.UserRegistrationSerializer
-    
+
+
 class LoginUserViwe():
     pass
+
+
+"""
+Create a Booking create API view:
+It should use the same serializer as the update view.
+The flight should get assigned automatically to the booking. The flight id should be retrieved from the url.
+The user should get assigned automatically to the booking. The logged in user who is creating the booking should get assigned as the user.
+"""
+
+
+class CreateBooking(generics.CreateAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = serializers.UpdateBookingSerializer
+    lookup_url_kwarg = "booking_id"
+
+    # def perform_create(self, serializers):
+    #     flight_id = self.kwargs['flight_id']
+    #     print("!!!!!!!!!!!", flight_id)
+    #     flight = Flight.objects.get(id=flight_id)
+    #     serializers = serializers.save(flight=flight)
+    #     return serializers
