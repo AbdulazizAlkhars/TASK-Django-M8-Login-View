@@ -50,13 +50,11 @@ The user should get assigned automatically to the booking. The logged in user wh
 
 
 class CreateBooking(generics.CreateAPIView):
-    queryset = Booking.objects.all()
     serializer_class = serializers.UpdateBookingSerializer
-    lookup_url_kwarg = "booking_id"
+    # queryset = Booking.objects.all()
 
-    # def perform_create(self, serializers):
-    #     flight_id = self.kwargs['flight_id']
-    #     print("!!!!!!!!!!!", flight_id)
-    #     flight = Flight.objects.get(id=flight_id)
-    #     serializers = serializers.save(flight=flight)
-    #     return serializers
+    def perform_create(self, serializer):
+        print("!!!!!!!!!!!!", self.request.user)
+        serializer.save(flight=Flight.objects.get(
+            id=self.kwargs["flight_id"]), user=self.request.user)
+        # return serializer.data
